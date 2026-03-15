@@ -29,9 +29,6 @@ import type { PressableProps, TextInputProps, TextProps } from 'react-native';
 import { Keyboard, Platform, Text, View, useColorScheme } from 'react-native';
 import { Pressable } from 'react-native';
 
-const bottomSheetBackdropStyle = tva({
-  base: 'absolute inset-0 bg-[#000]/50',
-});
 
 const bottomSheetContentStyle = tva({
   base: 'px-4 gap-2',
