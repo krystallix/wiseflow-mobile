@@ -4,98 +4,97 @@
 @import "nativewind/theme";
 
 /* ─── Theme: design tokens (light / dark) ─────────────────────────
-   Three selectors, two purposes:
    1. :root              — light defaults (all platforms)
    2. @media dark :root  — dark defaults; nativewind converts this to
                            Appearance.getColorScheme() on native.
-                           On web it still fires based on OS preference.
-   3. :root.dark / :root.light — specificity (0,2,0), beats the media
-                           query (0,1,0) within the same layer, so the
-                           GluestackUIProvider class-based toggle always
-                           wins on web. Ignored on native (no DOM). */
+   3. :root.dark / :root.light — specificity (0,2,0) for web toggle
+                           via GluestackUIProvider. Ignored on native. */
 @layer theme {
   :root {
-    --primary: 23 23 23;
-    --primary-foreground: 250 250 250;
+    --primary: 55 40 101;           /* #372865 */
+    --primary-foreground: 255 255 255;
     --card: 255 255 255;
-    --secondary: 245 245 245;
-    --secondary-foreground: 23 23 23;
-    --background: 255 255 255;
+    --card-foreground: 42 31 76;    /* #2A1F4C */
+    --secondary: 235 232 249;       /* #EBE8F9 */
+    --secondary-foreground: 55 40 101;
+    --background: 244 243 248;      /* #F4F3F8 */
     --popover: 255 255 255;
-    --popover-foreground: 10 10 10;
-    --muted: 245 245 245;
-    --muted-foreground: 115 115 115;
-    --destructive: 231 0 11;
-    --foreground: 10 10 10;
-    --border: 229 229 229;
-    --input: 229 229 229;
-    --ring: 212 212 212;
-    --accent: 247 247 247;
-    --accent-foreground: 52 52 52;
+    --popover-foreground: 42 31 76;
+    --muted: 242 241 246;           /* #F2F1F6 */
+    --muted-foreground: 129 122 155; /* #817A9B */
+    --destructive: 248 81 73;       /* #F85149 */
+    --foreground: 42 31 76;         /* #2A1F4C */
+    --border: 232 230 237;          /* #E8E6ED */
+    --input: 232 230 237;
+    --ring: 55 40 101;
+    --accent: 241 212 252;          /* #F1D4FC */
+    --accent-foreground: 55 40 101;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --primary: 255 245 245;
-      --primary-foreground: 23 23 23;
-      --card: 23 23 23;
-      --secondary: 38 38 38;
-      --secondary-foreground: 250 250 250;
-      --background: 10 10 10;
-      --popover: 23 23 23;
-      --popover-foreground: 250 250 250;
-      --muted: 38 38 38;
-      --muted-foreground: 161 161 161;
-      --destructive: 255 100 103;
-      --foreground: 250 250 250;
-      --border: 46 46 46;
-      --input: 46 46 46;
-      --accent: 38 38 38;
-      --accent-foreground: 250 250 250;
-      --ring: 115 115 115;
+      --primary: 190 169 251;       /* #BEA9FB */
+      --primary-foreground: 34 34 45; /* #22222D */
+      --card: 43 42 56;             /* #2B2A38 */
+      --card-foreground: 244 243 248;
+      --secondary: 59 57 74;        /* #3B394A */
+      --secondary-foreground: 244 243 248;
+      --background: 34 34 45;       /* #22222D */
+      --popover: 43 42 56;
+      --popover-foreground: 244 243 248;
+      --muted: 59 57 74;
+      --muted-foreground: 154 149 177; /* #9A95B1 */
+      --destructive: 248 81 73;
+      --foreground: 244 243 248;
+      --border: 62 60 78;           /* #3E3C4E */
+      --input: 62 60 78;
+      --ring: 190 169 251;
+      --accent: 95 66 117;          /* #5F4275 */
+      --accent-foreground: 244 243 248;
     }
   }
 
-  /* Web-only: higher specificity (0,2,0) overrides the media query (0,1,0).
-     GluestackUIProvider adds .dark or .light to <html> on every toggle. */
+  /* Web-only: higher specificity (0,2,0) overrides media query (0,1,0) */
   :root.dark {
-    --primary: 255 245 245;
-    --primary-foreground: 23 23 23;
-    --card: 23 23 23;
-    --secondary: 38 38 38;
-    --secondary-foreground: 250 250 250;
-    --background: 10 10 10;
-    --popover: 23 23 23;
-    --popover-foreground: 250 250 250;
-    --muted: 38 38 38;
-    --muted-foreground: 161 161 161;
-    --destructive: 255 100 103;
-    --foreground: 250 250 250;
-    --border: 46 46 46;
-    --input: 46 46 46;
-    --accent: 38 38 38;
-    --accent-foreground: 250 250 250;
-    --ring: 115 115 115;
+    --primary: 190 169 251;
+    --primary-foreground: 34 34 45;
+    --card: 43 42 56;
+    --card-foreground: 244 243 248;
+    --secondary: 59 57 74;
+    --secondary-foreground: 244 243 248;
+    --background: 34 34 45;
+    --popover: 43 42 56;
+    --popover-foreground: 244 243 248;
+    --muted: 59 57 74;
+    --muted-foreground: 154 149 177;
+    --destructive: 248 81 73;
+    --foreground: 244 243 248;
+    --border: 62 60 78;
+    --input: 62 60 78;
+    --ring: 190 169 251;
+    --accent: 95 66 117;
+    --accent-foreground: 244 243 248;
   }
 
   :root.light {
-    --primary: 23 23 23;
-    --primary-foreground: 250 250 250;
+    --primary: 55 40 101;
+    --primary-foreground: 255 255 255;
     --card: 255 255 255;
-    --secondary: 245 245 245;
-    --secondary-foreground: 23 23 23;
-    --background: 255 255 255;
+    --card-foreground: 42 31 76;
+    --secondary: 235 232 249;
+    --secondary-foreground: 55 40 101;
+    --background: 244 243 248;
     --popover: 255 255 255;
-    --popover-foreground: 10 10 10;
-    --muted: 245 245 245;
-    --muted-foreground: 115 115 115;
-    --destructive: 231 0 11;
-    --foreground: 10 10 10;
-    --border: 229 229 229;
-    --input: 229 229 229;
-    --ring: 212 212 212;
-    --accent: 247 247 247;
-    --accent-foreground: 52 52 52;
+    --popover-foreground: 42 31 76;
+    --muted: 242 241 246;
+    --muted-foreground: 129 122 155;
+    --destructive: 248 81 73;
+    --foreground: 42 31 76;
+    --border: 232 230 237;
+    --input: 232 230 237;
+    --ring: 55 40 101;
+    --accent: 241 212 252;
+    --accent-foreground: 55 40 101;
   }
 }
 
@@ -105,6 +104,7 @@
   --color-primary: rgb(var(--primary));
   --color-primary-foreground: rgb(var(--primary-foreground));
   --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
   --color-secondary: rgb(var(--secondary));
   --color-secondary-foreground: rgb(var(--secondary-foreground));
   --color-background: rgb(var(--background));
