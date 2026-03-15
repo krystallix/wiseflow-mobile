@@ -43,7 +43,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const pathname = usePathname();
-  const [colorMode, setColorMode] = useState<'light' | 'dark' | 'system'>('dark');
+  const [colorMode, setColorMode] = useState<'light' | 'dark' | 'system'>('light');
 
   return (
     <ThemeProvider value={colorMode === 'dark' ? DarkTheme : DefaultTheme}>
@@ -51,7 +51,7 @@ function RootLayoutNav() {
         <GluestackUIProvider mode={colorMode}>
           <StatusBar style={colorMode === 'dark' ? 'light' : 'dark'} />
           <Slot />
-          {pathname === '/' && (
+          {/* {pathname === '/' && (
             <Fab
               onPress={() =>
                 setColorMode(colorMode === 'dark' ? 'light' : 'dark')
@@ -61,7 +61,7 @@ function RootLayoutNav() {
             >
               <FabIcon as={colorMode === 'dark' ? MoonIcon : SunIcon} />
             </Fab>
-          )}
+          )} */}
         </GluestackUIProvider>
       </GestureHandlerRootView>
     </ThemeProvider>
