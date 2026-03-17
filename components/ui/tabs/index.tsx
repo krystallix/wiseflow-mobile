@@ -50,7 +50,7 @@ const tabsTriggerStyle = tva({
 
 const tabsTriggerTextStyle = tva({
   base: 'text-foreground/70 data-[selected=true]:text-foreground font-medium data-[hover=true]:text-foreground/90 ',
- 
+
 });
 
 const tabsTriggerIconStyle = tva({
@@ -70,7 +70,7 @@ const tabsIndicatorStyle = tva({
   base: 'pointer-events-none',
   parentVariants: {
     variant: {
-      underlined: 'border-b  border-primary',
+      underlined: 'border-b-2  border-primary pb-2',
       filled: 'bg-background z-20  rounded-lg',
     },
   },
@@ -101,7 +101,7 @@ const UITabs = createTabs({
 type ITabsProps = React.ComponentPropsWithoutRef<typeof UITabs> &
   VariantProps<typeof tabsStyle> & {
     variant?: 'underlined' | 'filled';
-   
+
   };
 
 type ITabsListProps = React.ComponentPropsWithoutRef<typeof UITabs.List>;
@@ -138,7 +138,7 @@ const Tabs = React.forwardRef<React.ComponentRef<typeof UITabs>, ITabsProps>(
         {...props}
         className={tabsStyle({ class: className })}
         // @ts-ignore - pass variants to context
-        context={{ variant}}
+        context={{ variant }}
       />
     );
   }
@@ -192,7 +192,7 @@ const TabsList = React.forwardRef<
             animated: true,
             viewPosition: 0.5,
           });
-        } catch {}
+        } catch { }
       }, 100);
 
       return () => clearTimeout(timer);
@@ -206,13 +206,13 @@ const TabsList = React.forwardRef<
     Platform.OS === 'web'
       ? undefined
       : useAnimatedScrollHandler({
-          onScroll: (event) => {
-            'worklet';
-            const x = event.contentOffset.x;
-            animatedScrollOffset.value = x;
-            runOnJS(setScrollOffset)(x);
-          },
-        });
+        onScroll: (event) => {
+          'worklet';
+          const x = event.contentOffset.x;
+          animatedScrollOffset.value = x;
+          runOnJS(setScrollOffset)(x);
+        },
+      });
 
   /**
    * Web scroll handler (JS thread)
@@ -272,7 +272,7 @@ const TabsList = React.forwardRef<
                   animated: false,
                   viewPosition: 0.5,
                 });
-              } catch {}
+              } catch { }
             }, 500);
           }}
           {...props}
@@ -307,7 +307,7 @@ const TabsTrigger = React.forwardRef<
       ref={ref}
       {...props}
       className={tabsTriggerStyle({
-        parentVariants: { variant  },
+        parentVariants: { variant },
         class: className,
       })}
     />
@@ -352,7 +352,7 @@ const TabsContentWrapper = React.forwardRef<
         isFirstRender.current = false;
       } else {
         // Animate height changes
-        heightValue.value = withSpring(height,{duration:100});
+        heightValue.value = withSpring(height, { duration: 100 });
       }
     }
   }, [height, heightValue]);
@@ -378,14 +378,14 @@ const TabsTriggerText = React.forwardRef<
   React.ComponentRef<typeof UITabs.TriggerText>,
   ITabsTriggerTextProps
 >(({ className, ...props }, ref) => {
-  
+
 
   return (
     <UITabs.TriggerText
       ref={ref}
       {...props}
       className={tabsTriggerTextStyle({
-       
+
         class: className,
       })}
     />
@@ -402,9 +402,9 @@ const TabsTriggerIcon = React.forwardRef<
   const safeProps =
     Platform.OS === 'web'
       ? (() => {
-          const { dataSet, ...rest } = props as any;
-          return rest;
-        })()
+        const { dataSet, ...rest } = props as any;
+        return rest;
+      })()
       : props;
 
   return (

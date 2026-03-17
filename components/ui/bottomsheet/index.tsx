@@ -26,7 +26,7 @@ import React, {
   useState,
 } from 'react';
 import type { PressableProps, TextInputProps, TextProps } from 'react-native';
-import { Keyboard, Platform, Text, View, useColorScheme } from 'react-native';
+import { Keyboard, Platform, Text, View, useColorScheme, TextInput } from 'react-native';
 import { Pressable } from 'react-native';
 
 
@@ -56,7 +56,7 @@ const bottomSheetFooterStyle = tva({
 const bottomSheetTextInputStyle = tva({
   base: 'flex-1 text-foreground text-sm md:text-sm py-1 placeholder:text-muted-foreground  web:outline-none ios:leading-[0px] web:cursor-text  h-9 w-full flex-row items-center rounded-md border border-border dark:bg-input/30 bg-transparent shadow-xs overflow-hidden px-3 gap-2',
 });
-
+const StyledTextInput = styled(TextInput);
 type BottomSheetContextValue = {
   visible: boolean;
   bottomSheetRef: React.RefObject<GorhomBottomSheet | null>;
@@ -415,6 +415,14 @@ export const BottomSheetTextInput = ({
   className,
   ...props
 }: TextInputProps & { className?: string }) => {
+  if (Platform.OS === 'web') {
+    return (
+      <StyledTextInput
+        {...props}
+        className={bottomSheetTextInputStyle({ className })}
+      />
+    );
+  }
   return (
     <GorhomBottomSheetInput
       {...props}

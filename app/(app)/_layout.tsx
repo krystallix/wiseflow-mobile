@@ -1,11 +1,12 @@
-import { Tabs } from 'expo-router';
+import { Tabs, Redirect } from 'expo-router';
 import { Home, Calendar, Notebook, Wallet2, CircleCheck } from 'lucide-react-native';
-import { useColorScheme, View, Pressable, Keyboard, Platform } from 'react-native';
+import { useColorScheme, View, Pressable, Keyboard, Platform, ActivityIndicator } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Text } from '@/components/ui/text';
 import { useState, useEffect } from 'react';
 import Animated, { FadeInRight, LinearTransition } from 'react-native-reanimated';
 import AppHeader from '../../components/app-header';
+import { supabase } from '@/libs/supabase';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -114,6 +115,34 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 }
 
 export default function AppLayout() {
+    const [sessionChecked, setSessionChecked] = useState(false);
+    const [hasSession, setHasSession] = useState(false);
+
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setHasSession(!!session);
+            setSessionChecked(true);
+        });
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setHasSession(!!session);
+        });
+
+        return () => subscription.unsubscribe();
+    }, []);
+
+    if (!sessionChecked) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} className="bg-background">
+                <ActivityIndicator size="large" color="#6366f1" />
+            </View>
+        );
+    }
+
+    if (!hasSession) {
+        return <Redirect href="/(auth)/get-started" />;
+    }
+
     return (
         <View className='flex-1'>
             <AppHeader />
