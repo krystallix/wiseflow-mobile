@@ -330,7 +330,7 @@ const TabsContent = React.forwardRef<
 const TabsContentWrapper = React.forwardRef<
   React.ComponentRef<typeof UITabs.ContentWrapper>,
   ITabsContentWrapperProps
->(({ className, targetHeight, ...props }: any, ref) => {
+>(({ className, targetHeight, style, ...props }: any, ref) => {
   const context = React.useContext(TabsContext);
 
   // Get the height of the selected content from the layouts Map
@@ -367,7 +367,7 @@ const TabsContentWrapper = React.forwardRef<
   return (
     <UITabs.ContentWrapper
       ref={ref}
-      style={animatedStyle}
+      style={[animatedStyle, style]}
       {...props}
       className={tabsContentWrapperStyle({ class: className })}
     />

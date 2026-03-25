@@ -1,6 +1,6 @@
 import { Redirect } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/libs/supabase';
+import { supabase } from '@/libs/supabase/client';
 import { ActivityIndicator, View } from 'react-native';
 
 export default function Index() {

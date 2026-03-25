@@ -23,7 +23,7 @@ import {
     BottomSheetTextInput,
 } from "@/components/ui/bottomsheet";
 import type { BottomSheetRef } from "@/components/ui/bottomsheet";
-import { supabase } from "@/libs/supabase";
+import { supabase } from "@/libs/supabase/client";
 
 const CAROUSEL_DATA = [
     {

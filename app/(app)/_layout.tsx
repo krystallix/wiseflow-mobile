@@ -6,7 +6,7 @@ import { Text } from '@/components/ui/text';
 import { useState, useEffect } from 'react';
 import Animated, { FadeInRight, LinearTransition } from 'react-native-reanimated';
 import AppHeader from '../../components/app-header';
-import { supabase } from '@/libs/supabase';
+import { supabase } from '@/libs/supabase/client';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 

@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar, AvatarFallbackText, AvatarImage } from '@/components/ui/avatar';
 import { Bell, Search } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/libs/supabase';
+import { supabase } from '@/libs/supabase/client';
 
 function getGreeting(): string {
     const hour = new Date().getHours();
