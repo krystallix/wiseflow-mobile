@@ -1,15 +1,16 @@
 {
-  "name": "starter-kit-expo",
+  "name": "wiseflow",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "build": "expo export --platform web --output-dir dist",
     "build:preview": "expo export --platform web --output-dir dist",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "eas-build-pre-install": "corepack enable && corepack prepare yarn@4.5.0 --activate"
   },
   "jest": {
     "preset": "jest-expo"
@@ -32,6 +33,7 @@
     "dom-helpers": "^5.2.1",
     "expo": "~55.0.5",
     "expo-constants": "~55.0.7",
+    "expo-dev-client": "^55.0.19",
     "expo-font": "~55.0.1",
     "expo-glass-effect": "~55.0.7",
     "expo-linking": "~55.0.7",
@@ -47,6 +49,7 @@
     "react-aria": "^3.41.1",
     "react-dom": "19.2.0",
     "react-native": "0.83.2",
+    "react-native-android-widget": "^0.20.1",
     "react-native-css": "^3.0.4",
     "react-native-gesture-handler": "^2.30.0",
     "react-native-reanimated": "4.2.1",
@@ -63,11 +66,15 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/helper-plugin-utils": "^7.28.6",
+    "@expo/log-box": "^55.0.8",
+    "@expo/metro-config": "^55.0.11",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/babel__helper-plugin-utils": "^7",
     "@types/react": "~19.2.2",
+    "eas-cli": "^18.4.0",
     "jest": "^29.2.1",
     "jest-expo": "~55.0.9",
+    "lightningcss": "^1.32.0",
     "postcss": "^8.5.6",
     "react-test-renderer": "19.0.0",
     "tailwindcss": "^4.2.0",
