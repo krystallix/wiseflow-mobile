@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Keyboard, Platform } from 'react-native';
+import { View, Keyboard, Platform } from 'react-native';
 import {
   BottomSheet,
   BottomSheetPortal,
   BottomSheetBackdrop,
-  type BottomSheetRef,
+  BottomSheetScrollView,
 } from '@/components/ui/bottomsheet';
 import { Button, ButtonText, ButtonIcon, ButtonSpinner } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
@@ -37,6 +37,7 @@ import {
   type Wallet,
   type Category,
   type TransactionType,
+  type Transaction,
 } from '@/libs/supabase/finance';
 
 const today = () => new Date().toISOString().split('T')[0];
@@ -52,6 +53,7 @@ type AddTransactionSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetRef | null>;
   wallets: Wallet[];
   categories: Category[];
+  editingTx?: Transaction | null;
   onSave: (payload: any) => Promise<void>;
   onClose: () => void;
 };
@@ -60,6 +62,7 @@ export default function AddTransactionSheet({
   bottomSheetRef,
   wallets,
   categories,
+  editingTx,
   onSave,
   onClose,
 }: AddTransactionSheetProps) {
@@ -76,11 +79,28 @@ export default function AddTransactionSheet({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (wallets.length > 0 && !walletId) {
-      const def = wallets.find(w => w.is_default) || wallets[0];
-      setWalletId(def.id);
+    if (editingTx) {
+      setType(editingTx.type);
+      setWalletId(editingTx.wallet_id);
+      setCategoryId(editingTx.category_id || '');
+      setAmount(String(editingTx.amount));
+      setNote(editingTx.note || '');
+      setDate(editingTx.date || today());
+      setTransferTo(editingTx.transfer_to_wallet_id || '');
+    } else {
+      setType('expense');
+      setAmount('');
+      setNote('');
+      setDate(today());
+      setCategoryId('');
+      setTransferTo('');
+      
+      if (wallets.length > 0) {
+        const def = wallets.find(w => w.is_default) || wallets[0];
+        setWalletId(def.id);
+      }
     }
-  }, [wallets]);
+  }, [editingTx, wallets]);
 
   const filteredCats = categories.filter(c => c.type === type || type === 'transfer');
 
@@ -122,12 +142,12 @@ export default function AddTransactionSheet({
         backdropComponent={BottomSheetBackdrop}
       >
         <View className="flex-1">
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <BottomSheetScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <VStack className="p-4 gap-6">
               <VStack className="gap-1">
-                <Heading size="md">New Transaction</Heading>
+                <Heading size="md">{editingTx ? 'Edit Transaction' : 'New Transaction'}</Heading>
                 <Text size="xs" className="text-muted-foreground">
-                  Record an income, expense, or transfer.
+                  {editingTx ? 'Update your financial record.' : 'Record an income, expense, or transfer.'}
                 </Text>
               </VStack>
 
@@ -307,12 +327,12 @@ export default function AddTransactionSheet({
                 ) : (
                   <ButtonIcon as={Plus} className="text-primary-foreground" />
                 )}
-                <ButtonText className="font-bold ml-2">Save Transaction</ButtonText>
+                <ButtonText className="font-bold ml-2">{editingTx ? 'Update Transaction' : 'Save Transaction'}</ButtonText>
               </Button>
 
               <View style={{ height: 100 }} />
             </VStack>
-          </ScrollView>
+          </BottomSheetScrollView>
         </View>
       </BottomSheetPortal>
     </BottomSheet>

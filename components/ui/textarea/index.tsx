@@ -2,6 +2,7 @@
 import React from 'react';
 import { createTextarea } from '@gluestack-ui/core/textarea/creator';
 import { View, TextInput } from 'react-native';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { tva } from '@gluestack-ui/utils/nativewind-utils';
 import {
   withStyleContext,
@@ -12,7 +13,7 @@ import type { VariantProps } from '@gluestack-ui/utils/nativewind-utils';
 const SCOPE = 'TEXTAREA';
 const UITextarea = createTextarea({
   Root: withStyleContext(View, SCOPE),
-  Input: TextInput,
+  Input: BottomSheetTextInput as unknown as typeof TextInput,
 });
 
 const textareaStyle = tva({

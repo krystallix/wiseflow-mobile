@@ -8,7 +8,6 @@ import { HStack } from '@/components/ui/hstack';
 import { Button, ButtonText, ButtonIcon } from '@/components/ui/button';
 import { Skeleton, SkeletonText } from '@/components/ui/skeleton';
 import { Progress, ProgressFilledTrack } from '@/components/ui/progress';
-import { Box } from '@/components/ui/box';
 import {
   ArrowUpRight,
   ArrowDownLeft,
@@ -19,7 +18,6 @@ import {
   CreditCard,
   Target,
   Receipt,
-  TrendingDown,
   BarChart3,
 } from 'lucide-react-native';
 import type {
@@ -417,9 +415,6 @@ export default function OverviewTab({
               </View>
               <Text className="font-bold text-foreground text-base">Saving Goals</Text>
             </HStack>
-            <Button size="sm" variant="link" className="p-0" onPress={onAddGoal}>
-              <Plus size={16} className="text-foreground" />
-            </Button>
           </HStack>
 
           {isLoading ? (

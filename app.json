@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "starter-kit-expo",
-    "slug": "starter-kit-expo",
+    "name": "Wise Flow",
+    "slug": "wise-flow-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "starterkitexpo",
+    "scheme": "wiseflow",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash-icon.png",
@@ -13,14 +13,16 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wiseflow.kit"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "softwareKeyboardLayoutMode": "adjustResize"
+      "softwareKeyboardLayoutMode": "adjustResize",
+      "package": "com.wiseflow.kit"
     },
     "web": {
       "bundler": "metro",
@@ -31,10 +33,31 @@
       "expo-router",
       "expo-web-browser",
       "expo-font",
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      [
+        "react-native-android-widget",
+        {
+          "widgets": [
+            {
+              "name": "CalendarWidget",
+              "label": "Calendar (Pasaran)",
+              "minWidth": "250dp",
+              "minHeight": "110dp",
+              "description": "Calendar Pasaran dan Hijriah",
+              "previewImage": "./assets/images/icon.png"
+            }
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "00988e57-5869-4010-8cf0-fa890aef8fdb"
+      }
     }
   }
 }

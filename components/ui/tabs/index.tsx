@@ -187,17 +187,19 @@ const TabsList = React.forwardRef<
     if (selectedIndex >= 0 && flatListRef.current) {
       const timer = setTimeout(() => {
         try {
-          flatListRef.current.scrollToIndex({
-            index: selectedIndex,
-            animated: true,
-            viewPosition: 0.5,
-          });
+          const layout = context.triggerLayouts.get(selectedKey);
+          if (layout) {
+            flatListRef.current.scrollTo({
+              x: Math.max(0, layout.x - 50),
+              animated: true,
+            });
+          }
         } catch { }
       }, 100);
 
       return () => clearTimeout(timer);
     }
-  }, [selectedKey, orientation, children]);
+  }, [selectedKey, orientation, children, context.triggerLayouts]);
 
   /**
    * Native animated scroll handler (ONLY for iOS / Android)
@@ -250,33 +252,19 @@ const TabsList = React.forwardRef<
       >
         {indicator}
 
-        <AnimatedFlatList
-          ref={flatListRef}
+        <Animated.ScrollView
+          ref={flatListRef as any}
           horizontal
-          data={triggers}
-          renderItem={({ item }) => item as any}
-          keyExtractor={(item: any, index) =>
-            item?.props?.value ?? `tab-${index}`
-          }
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
           style={{ zIndex: 100 }}
           onScroll={
             Platform.OS === 'web' ? handleWebScroll : nativeScrollHandler
           }
-          onScrollToIndexFailed={(info) => {
-            setTimeout(() => {
-              try {
-                flatListRef.current?.scrollToIndex({
-                  index: info.index,
-                  animated: false,
-                  viewPosition: 0.5,
-                });
-              } catch { }
-            }, 500);
-          }}
           {...props}
-        />
+        >
+          {triggers}
+        </Animated.ScrollView>
       </View>
     );
   }

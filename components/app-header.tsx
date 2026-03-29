@@ -1,11 +1,12 @@
 import { useSegments } from 'expo-router';
-import { View, useColorScheme } from 'react-native';
+import { View, useColorScheme, Pressable, Appearance } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Avatar, AvatarFallbackText, AvatarImage } from '@/components/ui/avatar';
-import { Bell, Search } from 'lucide-react-native';
+import { Search, Sun, Moon } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/libs/supabase/client';
+import CommandPalette from '@/components/command-palette';
 
 function getGreeting(): string {
     const hour = new Date().getHours();
@@ -25,23 +26,31 @@ export default function AppHeader() {
     const segments = useSegments();
 
     const [userName, setUserName] = useState<string>('User');
+    const [isCommandOpen, setIsCommandOpen] = useState<boolean>(false);
 
     useEffect(() => {
+        let isMounted = true;
+
         supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session?.user?.email) {
+            if (isMounted && session?.user?.email) {
                 setUserName(session.user.email.split('@')[0]);
             }
         });
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            if (session?.user?.email) {
-                setUserName(session.user.email.split('@')[0]);
-            } else {
-                setUserName('User');
+            if (isMounted) {
+                if (session?.user?.email) {
+                    setUserName(session.user.email.split('@')[0]);
+                } else {
+                    setUserName('User');
+                }
             }
         });
 
-        return () => subscription.unsubscribe();
+        return () => {
+            isMounted = false;
+            subscription.unsubscribe();
+        };
     }, []);
 
     const currentTab = segments[segments.length - 1] as string;
@@ -75,13 +84,22 @@ export default function AppHeader() {
             )}
 
             <View className="flex-row items-center gap-3">
-                <View className={`h-11 w-11 rounded-full items-center justify-center border border-border ${isDark ? 'bg-[#18181b]' : 'bg-gray-50'}`}>
+                <Pressable 
+                    onPress={() => setIsCommandOpen(true)}
+                    className={`h-11 w-11 rounded-full items-center justify-center border border-border ${isDark ? 'bg-[#18181b]' : 'bg-gray-50'}`}
+                >
                     <Search size={20} color={isDark ? '#e4e4e7' : '#3f3f46'} />
-                </View>
-                <View className={`h-11 w-11 rounded-full items-center justify-center border border-border ${isDark ? 'bg-[#18181b]' : 'bg-gray-50'}`}>
-                    <View className="absolute top-2.5 right-3 h-2 w-2 rounded-full bg-red-500 z-10 border border-background" />
-                    <Bell size={20} color={isDark ? '#e4e4e7' : '#3f3f46'} />
-                </View>
+                </Pressable>
+                <Pressable 
+                    onPress={() => Appearance.setColorScheme(isDark ? 'light' : 'dark')}
+                    className={`h-11 w-11 rounded-full items-center justify-center border border-border ${isDark ? 'bg-[#18181b]' : 'bg-gray-50'}`}
+                >
+                    {isDark ? (
+                        <Sun size={20} color="#e4e4e7" />
+                    ) : (
+                        <Moon size={20} color="#3f3f46" />
+                    )}
+                </Pressable>
                 <Avatar className="h-12 w-12">
                     <AvatarFallbackText>User</AvatarFallbackText>
                     <AvatarImage
@@ -91,6 +109,7 @@ export default function AppHeader() {
                     />
                 </Avatar>
             </View>
+        <CommandPalette isOpen={isCommandOpen} onClose={() => setIsCommandOpen(false)} />
         </View>
     );
 }

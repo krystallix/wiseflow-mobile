@@ -2,6 +2,7 @@
 import React from 'react';
 import { createInput } from '@gluestack-ui/core/input/creator';
 import { View, Pressable, TextInput } from 'react-native';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { tva } from '@gluestack-ui/utils/nativewind-utils';
 import { withStyleContext } from '@gluestack-ui/utils/nativewind-utils';
 import { styled } from 'nativewind';
@@ -16,7 +17,7 @@ const UIInput = createInput({
   Root: withStyleContext(View, SCOPE),
   Icon: StyledUIIcon,
   Slot: Pressable,
-  Input: TextInput,
+  Input: BottomSheetTextInput as unknown as typeof TextInput,
 });
 
 
