@@ -1,11 +1,17 @@
-import { registerWidgetTaskHandler } from 'react-native-android-widget';
+import {
+  registerWidgetTaskHandler,
+  type WidgetTaskHandler,
+} from 'react-native-android-widget';
 import { CalendarWidget } from './CalendarWidget';
 
 // Task handler — called by the Android OS when widget needs update
-async function widgetTaskHandler(props: any) {
-  const { widgetAction, widgetName, renderWidget } = props;
-
-  if (widgetName !== 'CalendarWidget') return;
+// NOTE: In react-native-android-widget v0.20+, widgetName lives inside widgetInfo
+const widgetTaskHandler: WidgetTaskHandler = async ({
+  widgetInfo,
+  widgetAction,
+  renderWidget,
+}) => {
+  if (widgetInfo.widgetName !== 'CalendarWidget') return;
 
   switch (widgetAction) {
     case 'WIDGET_ADDED':
@@ -16,6 +22,6 @@ async function widgetTaskHandler(props: any) {
     default:
       break;
   }
-}
+};
 
 registerWidgetTaskHandler(widgetTaskHandler);

@@ -72,7 +72,7 @@ export default function AddFundSheet({ bottomSheetRef, goal, onSave, onClose }: 
 
   return (
     <BottomSheet ref={bottomSheetRef} onClose={onClose}>
-      <BottomSheetPortal snapPoints={['55%']} backdropComponent={BottomSheetBackdrop}>
+      <BottomSheetPortal snapPoints={['65%', '85%']} backdropComponent={BottomSheetBackdrop} keyboardBehavior="interactive" keyboardBlurBehavior="restore">
         <View className="flex-1">
           <BottomSheetScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <VStack className="p-4 gap-6">

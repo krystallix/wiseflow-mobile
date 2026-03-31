@@ -187,6 +187,8 @@ type IBottomSheetPortalProps = Omit<
   handleIndicatorClassName?: string;
   enableDynamicSizing?: boolean;
   closeOnBackdropPress?: boolean;
+  keyboardBehavior?: 'interactive' | 'extend' | 'fillParent' | 'none';
+  keyboardBlurBehavior?: 'none' | 'restore';
   onChange?: (index: number, position?: number, type?: any) => void;
 };
 
@@ -206,6 +208,8 @@ export const BottomSheetPortal = ({
   enablePanDownToClose = true,
   enableDynamicSizing = false,
   closeOnBackdropPress = true,
+  keyboardBehavior = 'interactive',
+  keyboardBlurBehavior = 'restore',
   onChange,
   ...props
 }: IBottomSheetPortalProps) => {
@@ -235,8 +239,8 @@ export const BottomSheetPortal = ({
         onChange={handleSheetChanges}
         enablePanDownToClose={enablePanDownToClose}
         enableDynamicSizing={enableDynamicSizing}
-        keyboardBehavior="interactive"
-        keyboardBlurBehavior="restore"
+        keyboardBehavior={keyboardBehavior}
+        keyboardBlurBehavior={keyboardBlurBehavior}
         backgroundStyle={{
           backgroundColor: colorScheme === 'dark' ? '#0a0a0a' : '#ffffff',
           borderRadius: 24,

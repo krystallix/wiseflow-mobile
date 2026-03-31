@@ -1,10 +1,12 @@
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
+import '@/widgets/widgetTaskHandler';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
+  Theme,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
@@ -44,8 +46,24 @@ function RootLayoutNav() {
   const systemColorScheme = useColorScheme();
   const colorMode = systemColorScheme === 'dark' ? 'dark' : 'light';
 
+  const customDarkTheme: Theme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: '#22222D', // matches --background in global.css (dark)
+    },
+  };
+
+  const customLightTheme: Theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#F4F3F8', // matches --background in global.css (light)
+    },
+  };
+
   return (
-    <ThemeProvider value={colorMode === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorMode === 'dark' ? customDarkTheme : customLightTheme}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <GluestackUIProvider mode={colorMode}>
           <StatusBar style={colorMode === 'dark' ? 'light' : 'dark'} />

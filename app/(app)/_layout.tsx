@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 import Animated, { FadeInRight, LinearTransition } from 'react-native-reanimated';
 import AppHeader from '../../components/app-header';
 import { supabase } from '@/libs/supabase/client';
-import '@/widgets/widgetTaskHandler';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -145,7 +144,7 @@ export default function AppLayout() {
     }
 
     return (
-        <View className='flex-1'>
+        <View className='flex-1 bg-background'>
             <AppHeader />
             <Tabs
                 tabBar={(props) => <CustomTabBar {...props} />}

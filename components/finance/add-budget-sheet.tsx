@@ -106,7 +106,7 @@ export default function AddBudgetSheet({ bottomSheetRef, categories, onSave, onC
 
   return (
     <BottomSheet ref={bottomSheetRef} onClose={onClose}>
-      <BottomSheetPortal snapPoints={['60%']} backdropComponent={BottomSheetBackdrop}>
+      <BottomSheetPortal snapPoints={['75%', '90%']} backdropComponent={BottomSheetBackdrop} keyboardBehavior="interactive" keyboardBlurBehavior="restore">
         <View className="flex-1">
           <BottomSheetScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <VStack className="p-4 gap-6">

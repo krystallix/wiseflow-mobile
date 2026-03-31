@@ -73,7 +73,7 @@ function buildWeek(today: Date): DayData[] {
 // ─── Colors (Hex #AARRGGBB or #RRGGBB required for Android widget) ────────────
 
 const COLORS = {
-  bg: '#1e1b4b',
+  bg: '#00000000',        // fully transparent (Samsung-style widget)
   todayBg: '#6366f1',
   white: '#ffffff',
   whiteAlpha40: '#66ffffff', // ~40% opacity white
@@ -164,9 +164,10 @@ export function CalendarWidget() {
   return (
     <FlexWidget
       style={{
+        width: 'match_parent',
+        flex: 1,
         flexDirection: 'column',
         backgroundColor: COLORS.bg,
-        borderRadius: 24,
         padding: 16,
       }}
     >

@@ -6,6 +6,7 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
+  useColorScheme,
 } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
@@ -136,14 +137,24 @@ function NoteEditorSheet({
 
 // ─── Note Card ─────────────────────────────────────────────────────────────────
 
-const cardColors = [
-  { bg: '#fefce8', border: '#fef08a' },   // yellow
-  { bg: '#eef2ff', border: '#c7d2fe' },   // indigo
-  { bg: '#f0fdf4', border: '#bbf7d0' },   // green
-  { bg: '#fff1f2', border: '#fecdd3' },   // rose
-  { bg: '#f5f3ff', border: '#ddd6fe' },   // violet
-  { bg: '#f0f9ff', border: '#bae6fd' },   // sky
-];
+const cardColors = {
+  light: [
+    { bg: '#fefce8', border: '#fef08a' },   // yellow
+    { bg: '#eef2ff', border: '#c7d2fe' },   // indigo
+    { bg: '#f0fdf4', border: '#bbf7d0' },   // green
+    { bg: '#fff1f2', border: '#fecdd3' },   // rose
+    { bg: '#f5f3ff', border: '#ddd6fe' },   // violet
+    { bg: '#f0f9ff', border: '#bae6fd' },   // sky
+  ],
+  dark: [
+    { bg: '#3a3520', border: '#6b5e1a' },   // yellow-dark
+    { bg: '#1e1e3a', border: '#3730a3' },   // indigo-dark
+    { bg: '#1a2e22', border: '#166534' },   // green-dark
+    { bg: '#3a1a1e', border: '#9f1239' },   // rose-dark
+    { bg: '#251a38', border: '#5b21b6' },   // violet-dark
+    { bg: '#0f2533', border: '#0369a1' },   // sky-dark
+  ],
+};
 
 function NoteCard({
   note,
@@ -162,7 +173,9 @@ function NoteCard({
   onRestore: () => void;
   onPermanentDelete: () => void;
 }) {
-  const color = cardColors[index % cardColors.length];
+  const colorScheme = useColorScheme();
+  const palette = colorScheme === 'dark' ? cardColors.dark : cardColors.light;
+  const color = palette[index % palette.length];
   const excerptText = blockNoteExcerpt(note.content, 100);
 
   return (
@@ -196,13 +209,21 @@ function NoteCard({
           <HStack className="gap-2 mt-2">
             <Pressable
               onPress={onRestore}
-              style={{ flex: 1, height: 32, borderRadius: 12, backgroundColor: '#d1fae5', alignItems: 'center', justifyContent: 'center' }}
+              style={{
+                flex: 1, height: 32, borderRadius: 12,
+                backgroundColor: colorScheme === 'dark' ? '#14532d' : '#d1fae5',
+                alignItems: 'center', justifyContent: 'center',
+              }}
             >
               <RotateCcw size={14} color="#10b981" />
             </Pressable>
             <Pressable
               onPress={onPermanentDelete}
-              style={{ flex: 1, height: 32, borderRadius: 12, backgroundColor: '#ffe4e6', alignItems: 'center', justifyContent: 'center' }}
+              style={{
+                flex: 1, height: 32, borderRadius: 12,
+                backgroundColor: colorScheme === 'dark' ? '#4c0519' : '#ffe4e6',
+                alignItems: 'center', justifyContent: 'center',
+              }}
             >
               <Trash2 size={14} color="#f43f5e" />
             </Pressable>
@@ -223,6 +244,8 @@ function NoteCard({
 // ─── Main Screen ───────────────────────────────────────────────────────────────
 
 export default function Notes() {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
   const [notes, setNotes] = useState<Note[]>([]);
   const [deletedNotes, setDeletedNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
@@ -284,7 +307,7 @@ export default function Notes() {
         <HStack className="flex-1 items-center bg-card border border-border/40 rounded-2xl px-4 h-11 gap-2">
           <Search size={16} color="#94a3b8" />
           <TextInput
-            style={{ flex: 1, fontSize: 14 }}
+            style={{ flex: 1, fontSize: 14, color: isDark ? '#f4f3f8' : '#2a1f4c' }}
             placeholder="Search notes…"
             placeholderTextColor="#94a3b8"
             value={query}
@@ -302,12 +325,17 @@ export default function Notes() {
           onPress={() => setShowTrash(v => !v)}
           style={{
             height: 44, width: 44, borderRadius: 16,
-            backgroundColor: showTrash ? '#fff1f2' : 'white',
-            borderWidth: 1, borderColor: showTrash ? '#fecdd3' : '#e2e8f0',
+            backgroundColor: showTrash
+              ? (isDark ? '#4c0519' : '#fff1f2')
+              : (isDark ? '#2b2a38' : 'white'),
+            borderWidth: 1,
+            borderColor: showTrash
+              ? (isDark ? '#9f1239' : '#fecdd3')
+              : (isDark ? '#3e3c4e' : '#e2e8f0'),
             alignItems: 'center', justifyContent: 'center',
           }}
         >
-          <Trash2 size={18} color={showTrash ? '#f43f5e' : '#64748b'} />
+          <Trash2 size={18} color={showTrash ? '#f43f5e' : (isDark ? '#9a95b1' : '#64748b')} />
         </Pressable>
 
         <Pressable

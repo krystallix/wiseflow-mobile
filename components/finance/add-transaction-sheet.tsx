@@ -5,6 +5,7 @@ import {
   BottomSheetPortal,
   BottomSheetBackdrop,
   BottomSheetScrollView,
+  type BottomSheetRef,
 } from '@/components/ui/bottomsheet';
 import { Button, ButtonText, ButtonIcon, ButtonSpinner } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
@@ -138,8 +139,10 @@ export default function AddTransactionSheet({
   return (
     <BottomSheet ref={bottomSheetRef} onClose={onClose}>
       <BottomSheetPortal
-        snapPoints={['75%']}
+        snapPoints={['90%', '95%']}
         backdropComponent={BottomSheetBackdrop}
+        keyboardBehavior="interactive"
+        keyboardBlurBehavior="restore"
       >
         <View className="flex-1">
           <BottomSheetScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">

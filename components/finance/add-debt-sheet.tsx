@@ -136,7 +136,7 @@ export default function AddDebtSheet({ bottomSheetRef, wallets, onSave, onClose 
 
   return (
     <BottomSheet ref={bottomSheetRef} onClose={onClose}>
-      <BottomSheetPortal snapPoints={['90%']} backdropComponent={BottomSheetBackdrop}>
+      <BottomSheetPortal snapPoints={['90%']} backdropComponent={BottomSheetBackdrop} keyboardBehavior="interactive" keyboardBlurBehavior="restore">
         <View className="flex-1">
           <BottomSheetScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <VStack className="p-4 gap-6">

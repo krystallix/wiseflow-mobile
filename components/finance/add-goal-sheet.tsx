@@ -69,7 +69,7 @@ export default function AddGoalSheet({ bottomSheetRef, onSave, onClose }: Props)
 
   return (
     <BottomSheet ref={bottomSheetRef} onClose={onClose}>
-      <BottomSheetPortal snapPoints={['75%']} backdropComponent={BottomSheetBackdrop}>
+      <BottomSheetPortal snapPoints={['85%']} backdropComponent={BottomSheetBackdrop} keyboardBehavior="interactive" keyboardBlurBehavior="restore">
         <View className="flex-1">
           <BottomSheetScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <VStack className="p-4 gap-6">

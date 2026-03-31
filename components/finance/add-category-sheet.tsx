@@ -127,7 +127,7 @@ export default function AddCategorySheet({
 
   return (
     <BottomSheet ref={bottomSheetRef} onClose={onClose}>
-      <BottomSheetPortal snapPoints={['90%']} backdropComponent={BottomSheetBackdrop}>
+      <BottomSheetPortal snapPoints={['90%']} backdropComponent={BottomSheetBackdrop} keyboardBehavior="interactive" keyboardBlurBehavior="restore">
         <View className="flex-1 pb-safe">
           <BottomSheetScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <VStack className="p-5 gap-6">
